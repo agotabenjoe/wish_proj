@@ -14,20 +14,15 @@ using std::ifstream;
 
 UserList JSONParser::readUserData() {
 
-    cout<<"1"<<endl;
     ///Ha nem létezik létrejön
     file = fopen(fileName.c_str(),"r");
     if(!file){
-        cout<<"2"<<endl;
         fclose(file);
         file = fopen(fileName.c_str(), "w");
         fclose(file);
     }
 
     file = fopen(fileName.c_str(),"r");
-    cout<<"3"<<endl;
-
-    bool beenEOF = false;
 
     enum state{
         reading,
@@ -37,8 +32,10 @@ UserList JSONParser::readUserData() {
         waitforpassword,
         password,
         friends,
+        friendsmiddle,
         newfriend,
         friendrequests,
+        friendrequestsmiddle,
         newfriendrequests,
         wish,
         newwish,
@@ -60,14 +57,6 @@ UserList JSONParser::readUserData() {
 
     state = reading;
     while ((ch = fgetc(file)) != EOF){
-        /*if(file.eof()){
-            beenEOF = true;
-        }
-        file >> ch;
-        //cout<<ch;*/
-
-
-
         switch (state) {
             case reading:
                 if(ch == '{')
@@ -85,8 +74,8 @@ UserList JSONParser::readUserData() {
                 break;
             case username:
                 if(ch == ','){
+                    newUser->setUsername(uname);
                     state = waitforpassword;
-                    ///TODO: setUsername
                 }
                 else {
                     if(ch != '\"')
@@ -101,8 +90,8 @@ UserList JSONParser::readUserData() {
                 break;
             case password:
                 if(ch == ','){
+                    newUser->sePassword(pass);
                     state = friends;
-                    ///TODO: setPassword
                 }
                 else {
                     if(ch != '\"')
@@ -114,18 +103,28 @@ UserList JSONParser::readUserData() {
                 nFriend = "";
                 if(ch == ','  || ch== '[')
                     state = newfriend;
-                else if(ch == ']')
+                if(ch == ']')
                     state = friendrequests;
                 break;
+            case friendsmiddle:
+                nFriend = "";
+                if(ch == '"')
+                    state=newfriend;
+                break;
             case newfriend:
+                if( ch == ']'){
+                    newUser->addFriend(nFriend);
+                    state = friendrequests;
+                } else
                 if(ch == ','){
                     newUser->addFriend(nFriend);
-                    state = friends;
+                    state = friendsmiddle;
                 }
                 else {
-                    if(ch != '\"')
+                    if(ch != '\"'){
                         if(ch != ' ')
                             nFriend = nFriend + ch;
+                    }
                 }
                 break;
             case friendrequests:
@@ -135,10 +134,19 @@ UserList JSONParser::readUserData() {
                 else if(ch == ']')
                     state = wish;
                 break;
+            case friendrequestsmiddle:
+                request = "";
+                if(ch == '"')
+                    state=newfriendrequests;
+                break;
             case newfriendrequests:
+                if( ch == ']'){
+                    newUser->addFriendRequest(request);
+                    state = wish;
+                }
                 if(ch == ','){
                     newUser->addFriendRequest(request);
-                    state = friendrequests;
+                    state = friendrequestsmiddle;
                 }
                 else {
                     if(ch != '\"')
@@ -154,13 +162,22 @@ UserList JSONParser::readUserData() {
                     state = gift;
                 break;
             case newwish:
+                if( ch == ']'){
+                    stringstream tmp;
+                    tmp << nWish;
+                    int w;
+                    tmp >> w;
+                    newUser->addWish((w));
+                    state = gift;
+                }
                 if(ch == ','){
                     stringstream tmp;
                     tmp << nWish;
                     int w;
                     tmp >> w;
                     newUser->addWish((w));
-                    state = wish;
+                    nWish = "";
+                    state = newwish;
                 }
                 else {
                     if(ch != '\"')
@@ -176,13 +193,22 @@ UserList JSONParser::readUserData() {
                     state = reading;
                 break;
             case newgift:
+                if( ch == ']'){
+                    stringstream tmp;
+                    tmp << nGift;
+                    int g;
+                    tmp >> g;
+                    newUser->addGift((g));
+                    state = reading;
+                }
                 if(ch == ','){
                     stringstream tmp;
                     tmp << nGift;
                     int g;
                     tmp >> g;
                     newUser->addGift((g));
-                    state = gift;
+                    nGift = "";
+                    state = newgift;
                 }
                 else {
                     if(ch != '\"')

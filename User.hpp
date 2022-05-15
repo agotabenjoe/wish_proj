@@ -74,6 +74,12 @@ class User: public ListElement{
      * ***/
     Array<int> getGifts() const;
 
+    void setUsername(String newUsername);
+
+    void sePassword(String newPassword);
+
+
+
     /*** 
      * Hozzáadó
      * @param newFriend új barát felhasználóneve

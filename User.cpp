@@ -60,6 +60,14 @@
         return password;
     }
 
+void User::setUsername(String newUsername){
+        userName = newUsername;
+    }
+
+void User::sePassword(String newPassword){
+        password = newPassword;
+    }
+
     /*** 
      * Hozzáadó
      * @param newFriend új barát felhasználóneve

@@ -326,7 +326,7 @@ int main(){
     JSONParser userFile("example.json");
     UserList users = userFile.readUserData();
 
-    //std::cout << users.getUserbyUsername("Frodo")->getFriends()[0];
+    std::cout << users.getUserbyUsername("Aragorn")->getFriendRequests()[0];
 
     return 0;
 }
