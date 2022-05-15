@@ -29,6 +29,11 @@ class Wish: public ListElement{
      * ***/
     Wish(String n, String o):ListElement(NULL), name(n),owner(o), isTaken(false){}
 
+    /***
+     * Konstruktor: paraméter nélküli
+     * ***/
+    Wish():ListElement(NULL), name(),owner(), giver(),isTaken(false){}
+
     ///Copy konstruktor
     Wish(const Wish& w);
 
@@ -66,6 +71,11 @@ class Wish: public ListElement{
      * @param n wish új neve
      * ***/
     void setName(String n);
+
+    /***
+     * @param o owner
+     * ***/
+    void setOwner(String o);
 
     Wish& operator=(const Wish& w);
  

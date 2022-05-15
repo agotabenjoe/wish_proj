@@ -170,8 +170,11 @@ void delGiftTest(UserList& users, WishList& wishes, char const *wisher, int idx)
 
 int main(){
 
-    UserList users;  //= userFile.readUserData();
-    WishList wishes; //= wishFile.readWishData();
+    JSONParser userFile("example.json");
+    UserList users = userFile.readUserData();
+
+    JSONParser wishFile("wishes.json");
+    WishList wishes = wishFile.readWishData();
 
     ///regisztráció és ajándékok hozzáadása
     TEST(Regisztralas, regisztralasESAjandekok){
@@ -323,10 +326,25 @@ int main(){
 
 #if MODE == 3
 int main(){
-    JSONParser userFile("example.json");
-    UserList users = userFile.readUserData();
+    JSONParser wishFile("wishes.json");
+    WishList wishes = wishFile.readWishData();
 
-    std::cout << users.getUserbyUsername("Aragorn")->getFriendRequests()[0];
+    std::cout << wishes.getWishbyId(0)->gotTaken() << std::endl;
+    std::cout << wishes.getWishbyId(0)->getName()<< std::endl;
+    std::cout << wishes.getWishbyId(0)->getOwner() << std::endl;
+    std::cout << wishes.getWishbyId(0)->getGiver()<< std::endl;
+
+    std::cout << wishes.getWishbyId(1)->gotTaken() << std::endl;
+    std::cout << wishes.getWishbyId(1)->getName()<< std::endl;
+    std::cout << wishes.getWishbyId(1)->getOwner() << std::endl;
+    std::cout << wishes.getWishbyId(1)->getGiver()<< std::endl;
+
+    std::cout << wishes.getWishbyId(2)->gotTaken() << std::endl;
+    std::cout << wishes.getWishbyId(2)->getName()<< std::endl;
+    std::cout << wishes.getWishbyId(2)->getOwner() << std::endl;
+    //std::cout << wishes.getWishbyId(2)->getGiver()<< std::endl;
+
+
 
     return 0;
 }

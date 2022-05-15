@@ -1,10 +1,17 @@
 [
   {
-    "username": "Frodo",
-    "password": "meGye3000!",
-    "friends":[ "Gandalf"],
-    "friends_requedsts":["Aragorn"],
-    "wishes":[1],
-    "gift":[1]
+    "name": "kard",
+    "owner": "Aragorn",
+    "giver": "Elrond"
+  },
+  {
+    "name": "gyűrű",
+    "owner": "Bilbo",
+    "giver": "Gollum"
+  },
+  {
+    "name": "victory",
+    "owner": "Aragorn",
+    "giver": ""
   }
 ]

@@ -31,7 +31,7 @@ class JSONParser{
      * A JSONParser-nek megadott fájlból beolvas egy WishList-et
      * @return WishList-et ad vissza, benne a felhasználók adataival
      * ***/
-    WishList readWishData() const; //pointer-foglalás
+    WishList readWishData(); //pointer-foglalás
 
     /*** 
      * A JSONParser-nek megadott fájlba kiír egy UserList-et

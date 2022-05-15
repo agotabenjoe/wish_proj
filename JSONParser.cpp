@@ -54,7 +54,6 @@ UserList JSONParser::readUserData() {
     String nGift;
 
     char ch;
-
     state = reading;
     while ((ch = fgetc(file)) != EOF){
         switch (state) {
@@ -223,4 +222,114 @@ UserList JSONParser::readUserData() {
 
     fclose(file);
     return users;
+}
+
+WishList JSONParser::readWishData()  {
+    //Ha nem létezik létrejön
+    file = fopen(fileName.c_str(),"r");
+    if(!file){
+        fclose(file);
+        file = fopen(fileName.c_str(), "w");
+        fclose(file);
+    }
+
+    file = fopen(fileName.c_str(),"r");
+
+
+    enum state{
+        reading,
+        nwish,
+        name,
+        owner,
+        giver,
+        waitforname,
+        waitforowner,
+        waitforgiver,
+        waitforname2,
+        waitforowner2,
+        waitforgiver2
+    }state;
+
+    WishList wishes;
+    Wish* newWish;
+
+    String n;
+    String o;
+    String g;
+    int gLen = 0;
+
+    char ch;
+    state = reading;
+    while ((ch = fgetc(file)) != EOF){
+
+        switch (state) {
+            case reading:
+                if(ch == '{')
+                    state = nwish;
+                break;
+            case nwish:
+                newWish = new Wish;
+                wishes.add(newWish);
+                state = waitforname2;
+                break;
+            case waitforname2:
+                if(ch == ':')
+                    state = waitforname;
+                break;
+            case waitforname:
+                n = "";
+                if(ch == '"')
+                    state = name;
+                break;
+            case name:
+                if(ch == '"'){
+                    newWish->setName(n);
+                    state = waitforowner2;
+                } else{
+                    n = n + ch;
+                }
+                break;
+            case waitforowner2:
+                if(ch == ':')
+                    state = waitforowner;
+                break;
+            case waitforowner:
+                o = "";
+                if(ch == '"')
+                    state = owner;
+                break;
+            case owner:
+                if(ch == '"'){
+                    newWish->setOwner(o);
+                    state = waitforgiver2;
+                } else{
+                    o = o + ch;
+                }
+                break;
+            case waitforgiver2:
+                if(ch == ':')
+                    state = waitforgiver;
+                break;
+            case waitforgiver:
+                g = "";
+                gLen = 0;
+                if(ch == '"')
+                    state = giver;
+                break;
+            case giver:
+                if(ch == '"'){
+                    if(gLen > 0){
+                        newWish->setGiver(g);
+                    }
+                    state = reading;
+                } else{
+                    gLen = gLen +1;
+                    g = g + ch;
+                }
+                break;
+        }
+    }
+
+    fclose(file);
+    return wishes;
 }

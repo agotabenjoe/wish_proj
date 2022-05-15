@@ -59,6 +59,13 @@ String Wish::getGiver() const{
         isTaken = true;
     }
 
+/***
+ * @param o owner
+ * ***/
+void Wish::setOwner(String o){
+    owner = o;
+}
+
     Wish& Wish::operator=(const Wish& w){
         Wish newW(w);
         return newW;
