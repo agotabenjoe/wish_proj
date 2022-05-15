@@ -217,7 +217,8 @@ UserList JSONParser::readUserData() {
                 }
                 break;
         }
-        
+
+
     }
 
     fclose(file);
