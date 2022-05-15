@@ -15,7 +15,7 @@
 
 
 /*
-Konzolus működés
+///Konzolos működés
 int main(){
     bool programRun = true;
 
@@ -44,6 +44,49 @@ int main(){
 ///TODO: több felhasználó hozzáadása
 ///TODO: ostream operator javít
 
+/***
+ * User hozzáadása a UserListhez
+ * @param u a UserList referenciája
+ * @param name az új user neve
+ * @param pass az új user jelszava
+ * ***/
+void addUser(UserList& u, char const *name, char const* pass){
+    User* newUser = new User(String(name), String(pass));
+    u.add(newUser);
+}
+
+/***
+ * Wish hozzáadása a WishListhez
+ * @param u a UserList referenciája
+ * @param w a WishList referenciája
+ * @param pass az új user jelszava
+ * ***/
+void addWish(UserList& u, WishList& w, char const *userName, String  wishName){
+    Wish* newWish =  new Wish(wishName, userName);
+    u.getUserbyUsername(userName)->addWish(newWish->getId());
+    w.add(newWish);
+}
+
+/***
+ * A user hozzáadás és wish hozzáadás sikerességének tesztelése
+ * @param u a UserList referenciája
+ * @param w a WishList referenciája
+ * @param userName az új user neve
+ * @param pass az új user jelszava
+ * @param userWishes a kívánságok neveinek tömbje
+ * ***/
+void userAndWishTest(UserList& users, WishList& wishes,char const *userName, char const* pass, Array<String> userWishes){
+    addUser(users, userName, pass);
+    for (int i = 0; i < userWishes.getLen(); ++i) {
+        addWish(users, wishes, userName, userWishes[i]);
+        EXPECT_EQ(wishes.getWishbyOwner(userName)[i]->getId(), users.getUserbyUsername(userName)->getWishes()[i]) << userName <<" "<< userWishes[i] <<"rossz " << std::endl;
+    }
+}
+
+void friendTest(){
+
+}
+
 int main(){
 
     UserList users;  //= userFile.readUserData();
@@ -51,147 +94,52 @@ int main(){
 
     //regisztráció és ajándékok hozzáadása
     TEST(Regisztralas, regisztralasESAjandekok){
+
         //Luke
-        User* luke = new User("Luke", "jelszo1234");
-        users.add(luke);
+        Array<String> lukeWish;
+        lukeWish.add("fenykard");
+        lukeWish.add("xWing");
+        lukeWish.add("kopeny");
+        lukeWish.add("robot");
+        userAndWishTest(users, wishes,"Luke", "jelszo1234", lukeWish);
 
-        Wish* fenykard =  new Wish("fenykard", luke->getUsername());
-        wishes.add(fenykard);
-
-        luke->addWish(fenykard->getId());
-
-        Wish* xWing =  new Wish("xWing", luke->getUsername());
-        wishes.add(xWing);
-        luke->addWish(xWing->getId());
-
-        Wish* robot =  new Wish("robot", luke->getUsername());
-        wishes.add(robot);
-        luke->addWish(robot->getId());
-
-        Wish* kopeny =  new Wish("kopeny", luke->getUsername());
-        wishes.add(kopeny);
-        luke->addWish(kopeny->getId());
-
-        EXPECT_EQ(wishes.getWishbyOwner(luke->getUsername())[0]->getId(), fenykard->getId()) << "Luke Fenykard rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(luke->getUsername())[1]->getId(), xWing->getId()) << "Luke xWing rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(luke->getUsername())[2]->getId(), robot->getId()) << "Luke robot rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(luke->getUsername())[3]->getId(), kopeny->getId()) << "Luke kopeny rossz " << std::endl;
 
         //Obi-Wan
-        User* obi = new User("Obi-Wan", "hellothere");
-        users.add(obi);
-
-        Wish* fenykard3 =  new Wish("fenykard", obi->getUsername());
-        wishes.add(fenykard3);
-        obi->addWish(fenykard->getId());
-
-        Wish* gyik =  new Wish("gyik", obi->getUsername());
-        wishes.add(gyik);
-        obi->addWish(gyik->getId());
-
-        Wish* hajo =  new Wish("hajo", obi->getUsername());
-        wishes.add(hajo);
-        obi->addWish(hajo->getId());
-
-        Wish* kopeny3 =  new Wish("kopeny", obi->getUsername());
-        wishes.add(kopeny3);
-        obi->addWish(kopeny3->getId());
-
-        EXPECT_EQ(wishes.getWishbyOwner(obi->getUsername())[0]->getId(), fenykard3->getId()) << "Obi Fenykard rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(obi->getUsername())[1]->getId(), gyik->getId()) << "Obi hajo rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(obi->getUsername())[2]->getId(), hajo->getId()) << "Obi kopeny rossz " << std::endl;
-
+        Array<String> obiWish;
+        obiWish.add("fenykard");
+        obiWish.add("gyik");
+        obiWish.add("hajo");
+        obiWish.add("kopeny");
+        userAndWishTest(users, wishes,"Obi-Wan", "hellothere", obiWish);
 
         //Yoda
-        User* yoda = new User("Yoda", "grammardoyoueven");
-        users.add(yoda);
-
-        Wish* haziko =  new Wish("haziko", yoda->getUsername());
-        wishes.add(haziko);
-        obi->addWish(haziko->getId());
-
-
-        EXPECT_EQ(wishes.getWishbyOwner(yoda->getUsername())[0]->getId(), haziko->getId()) << "Yoda haziko rossz " << std::endl;
+        Array<String> yodaWish;
+        yodaWish.add("haziko");
+        userAndWishTest(users, wishes,"Yoda", "grammardoyoueven", yodaWish);
 
         //Han
-        User* han = new User("Han", "IShotFirst!");
-        users.add(han); //új felhasználó hozzáadás (regisztráció)
-
-
-
-        Wish* falcon = new Wish("Falcon", han->getUsername());
-        wishes.add(falcon);
-        han->addWish(falcon->getId());
-
-        Wish* blaster = new Wish("blaster", han->getUsername());
-        wishes.add(blaster);
-        han->addWish(blaster->getId());
-
-        Wish* melleny = new Wish("melleny", han->getUsername());
-        wishes.add(melleny);
-        han->addWish(melleny->getId());
-
-
-        EXPECT_EQ(wishes.getWishbyOwner(han->getUsername())[0]->getId(), falcon->getId()) << "Han falcon rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(han->getUsername())[1]->getId(), blaster->getId()) << "Han blaster rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(han->getUsername())[2]->getId(), melleny->getId()) << "Han melleny rossz " << std::endl;
-
-
+        Array<String> hanWish;
+        hanWish.add("Falcon");
+        hanWish.add("blaster");
+        hanWish.add("melleny");
+        userAndWishTest(users, wishes,"Han", "IShotFirst", hanWish);
 
         //Leia
-        User* leia = new User("Leia", "alderaan!");
-        users.add(leia);
-
-        Wish* hope = new Wish("hope", leia->getUsername());
-        wishes.add(hope);
-        leia->addWish(hope->getId());
-
-        Wish* blaster2 = new Wish("blaster", leia->getUsername());
-        wishes.add(blaster2);
-        leia->addWish(blaster2->getId());
-
-        EXPECT_EQ(wishes.getWishbyOwner(leia->getUsername())[0]->getId(), hope->getId()) << "Leia hope rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(leia->getUsername())[1]->getId(), blaster2->getId()) << "Leia blaster rossz " << std::endl;
-
+        Array<String> leiaWish;
+        leiaWish.add("hope");
+        leiaWish.add("blaster");
+        userAndWishTest(users, wishes,"Leia", "alderaan", leiaWish);
 
         //Vader
-        User* vader = new User("Vader", "hmmmmm");
-        users.add(vader); //új felhasználó hozzáadás (regisztráció)
-
-        Wish* halalcsillag = new Wish("Halalcsillag", vader->getUsername());
-        wishes.add(halalcsillag);
-        vader->addWish(halalcsillag->getId());
-
-        Wish* sisak = new Wish("Sisak", vader->getUsername());
-        wishes.add(sisak);
-        vader->addWish(sisak->getId());
-
-        Wish* fenykard2 = new Wish("Fenykard", vader->getUsername());
-        wishes.add(fenykard2);
-        vader->addWish(fenykard2->getId());
-
-
-        EXPECT_EQ(wishes.getWishbyOwner(vader->getUsername())[0]->getId(), halalcsillag->getId()) << "Vader halalcsillag rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(vader->getUsername())[1]->getId(), sisak->getId())<< "Vader sisak rossz " << std::endl;
-        EXPECT_EQ(wishes.getWishbyOwner(vader->getUsername())[2]->getId(), fenykard2->getId())<< "Vader fenykard rossz " << std::endl;
+        Array<String> vaderWish;
+        vaderWish.add("Halalcsillag");
+        vaderWish.add("sisak");
+        vaderWish.add("fenykard");
+        userAndWishTest(users, wishes,"Vader", "ahmmhmh", vaderWish);
 
         //userFile.writeUserData(users);
         //wishFile.writeWishData(wishes);
-
-
     } ENDM
-
-
-
-/*****************************************************************************************************************************************/
-/*****************************************************************************************************************************************/
-/*****************************************************************************************************************************************/
-/*****************************************************************************************************************************************/
-/*****************************************************************************************************************************************/
-
-
-
-
 
     //Barát jelölések és elfogadások
     TEST(Baratok, jelolesekEsFogadasok){
@@ -349,14 +297,17 @@ int main(){
 
         EXPECT_EQ(vader->getGifts()[0], wishes.getWishbyOwner("Luke")[3]->getId()) << "Vader -> Luke  rossz" << std::endl;
 
+        //Obi-Wan ajándékoz
+        obi->addGift(yoda->getWishes()[0]);
+        wishes.getWishbyOwner("Yoda")[0]->setGiver("Obi-Wan");
 
+        EXPECT_EQ(obi->getGifts()[0], wishes.getWishbyOwner("Yoda")[0]->getId()) << "Obi -> Yoda  rossz" << std::endl;
 
+        //Obi-Wan ajándékoz
+        yoda->addGift(obi->getWishes()[1]);
+        wishes.getWishbyOwner("Obi-Wan")[1]->setGiver("Yoda");
 
-
-        //EXPECT_EQ(vader->getGifts()[0], wishes.getWishbyOwner("Luke")[2]->getId()) << "Vader -> Luke rossz" << std::endl;
-
-
-
+        EXPECT_EQ(yoda->getGifts()[0], wishes.getWishbyOwner("Obi-Wan")[1]->getId()) << "Yoda -> obi  rossz" << std::endl;
 
 
         //userFile.writeUserData(users);
@@ -414,4 +365,5 @@ int main(){
 
     return  0;
 }
+
 

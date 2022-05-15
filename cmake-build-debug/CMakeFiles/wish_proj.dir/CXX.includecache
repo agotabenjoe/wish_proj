@@ -18,16 +18,6 @@ UserList.hpp
 WishList.hpp
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/WishList.hpp
 
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/List.cpp
-cstddef
--
-iostream
--
-List.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/List.hpp
-ListElement.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/ListElement.hpp
-
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/List.hpp
 cstddef
 -
