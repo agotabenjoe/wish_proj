@@ -129,6 +129,30 @@ wish_proj/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/build
 .PHONY : wish_proj/fast
 
+JSONParser.o: JSONParser.cpp.o
+.PHONY : JSONParser.o
+
+# target to build an object file
+JSONParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/JSONParser.cpp.o
+.PHONY : JSONParser.cpp.o
+
+JSONParser.i: JSONParser.cpp.i
+.PHONY : JSONParser.i
+
+# target to preprocess a source file
+JSONParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/JSONParser.cpp.i
+.PHONY : JSONParser.cpp.i
+
+JSONParser.s: JSONParser.cpp.s
+.PHONY : JSONParser.s
+
+# target to generate assembly for a file
+JSONParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/JSONParser.cpp.s
+.PHONY : JSONParser.cpp.s
+
 List.o: List.cpp.o
 .PHONY : List.o
 
@@ -354,6 +378,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... wish_proj"
+	@echo "... JSONParser.o"
+	@echo "... JSONParser.i"
+	@echo "... JSONParser.s"
 	@echo "... List.o"
 	@echo "... List.i"
 	@echo "... List.s"

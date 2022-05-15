@@ -86,6 +86,12 @@
 		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/AuthMenu.hpp">
 			<Option target="wish_proj"/>
 		</Unit>
+		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/JSONParser.cpp">
+			<Option target="wish_proj"/>
+		</Unit>
+		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/JSONParser.hpp">
+			<Option target="wish_proj"/>
+		</Unit>
 		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/List.cpp">
 			<Option target="wish_proj"/>
 		</Unit>

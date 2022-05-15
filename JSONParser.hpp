@@ -5,7 +5,7 @@
 #include "WishList.hpp"
 
 class JSONParser{
-    std::fstream file;
+    FILE* file;
     String fileName;
 
     public:
@@ -13,19 +13,19 @@ class JSONParser{
      * Konstruktor: megnyit egy fájlt a megadott elérési útból
      * @param path elérési út
      * ***/
-    JSONParser(String path):fileName(path){}
+    explicit JSONParser(String path):fileName(path){}
     /*** 
      * Destruktor: bezárja a megnyitott fájlt
      * ***/
-    ~JSONParser();
+    //~JSONParser();
 
-    JSONParser(const JSONParser& j);
+   // JSONParser(const JSONParser& j):file(j.file), fileName(j.fileName){}
 
     /*** 
      * A JSONParser-nek megadott fájlból beolvas egy UserList-et
      * @return UserList-et ad vissza, benne a felhasználók adataival
      * ***/
-    UserList readUserData() const; //pointer-foglalás
+    UserList readUserData(); //pointer-foglalás
 
     /*** 
      * A JSONParser-nek megadott fájlból beolvas egy WishList-et

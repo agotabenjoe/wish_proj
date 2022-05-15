@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/wish_proj.dir/JSONParser.cpp.o"
   "CMakeFiles/wish_proj.dir/List.cpp.o"
   "CMakeFiles/wish_proj.dir/ListElement.cpp.o"
   "CMakeFiles/wish_proj.dir/String.cpp.o"

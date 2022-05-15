@@ -1,5 +1,9 @@
 #pragma once
 #define MEMTRACE
+#define MODE 3
+///1 - menüvezérelt működés
+///2 - teszt futtatása
+///3 - fájlkezelés teszt
 
 #include <iostream>
 #include <sstream>
@@ -13,8 +17,8 @@
 #include "WishList.hpp"
 
 
+#if MODE == 1
 
-/*
 ///Konzolos működés
 int main(){
     bool programRun = true;
@@ -38,9 +42,11 @@ int main(){
 
     userFile.writeUserData(users);
     wishFile.writeWishData(wishes);
-*/
+}
 
+#endif
 
+#if MODE == 2
 /***
  * User hozzáadása a UserListhez
  * @param u a UserList referenciája
@@ -80,7 +86,6 @@ void userAndWishTest(UserList& users, WishList& wishes,char const *userName, cha
     }
 }
 
-///TODO:majd refactorolni kell és belerakni az arrayba mint tagfüggvény és templatesíteni kell
 /***
  * Ellenőrzi, hogy egy String benne van- egy String tömben
  * @param a a tömb
@@ -313,5 +318,17 @@ int main(){
 
     return  0;
 }
+#endif
 
 
+#if MODE == 3
+int main(){
+    JSONParser userFile("example.json");
+    UserList users = userFile.readUserData();
+
+    //std::cout << users.getUserbyUsername("Frodo")->getFriends()[0];
+
+    return 0;
+}
+
+#endif

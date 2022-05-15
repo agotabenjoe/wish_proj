@@ -1,0 +1,10 @@
+[
+  {
+    "username": "Frodo",
+    "password": "meGye3000!",
+    "friends":[ "Gandalf"],
+    "friends_requests":["Aragorn"],
+    "wishes":[1],
+    "gift":[1]
+  }
+]
