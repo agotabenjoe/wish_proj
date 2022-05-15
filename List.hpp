@@ -37,7 +37,7 @@ class List{
      * Töröl egy listaelemet azonosító alapján
      * @param id a törölendő elem azonosítója
      * ***/
-    void remove(int id);
+    virtual void remove(int id);
 
      /*** 
      * 0.tól kezdődő konstans indexelő operátor

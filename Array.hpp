@@ -61,23 +61,50 @@ class Array{
      * @param idx törlendő elem indexe
      * ***/
     void remove(int idx){
-        len--;
-        T* placeHolder = new T [len];
-        int j = 0;
+        ///Először beshiftelünk a trölöni kívánt elem helyére
+        for (int i = 0; i < len; ++i) {
+            if(idx<i){
+                elements[i-1] = elements[i];
+            }
+        }
+        ///Létrehozzuk az új kisebb tömböt és beleírjuk az elshiftelt tömböt, amiben már nincs benn a törölt elem
+        len = len-1;
+        T* tmp = new T [len];
+        for (int i = 0; i < len; ++i){
+            tmp[i] = elements[i];
+        }
+        delete[] elements;
+        elements = tmp;
+
+        ///elem indexének helyére shiftelés ezután jön az utolsó elem levágása
+       /* int j = 0;
         for (int i = 0; i < len; i++){
             if(idx != j){
-                placeHolder[i] = elements[j];
+                tmp[i] = elements[j];
                 j++;
             }else{
                 j++;
-                placeHolder[i] = elements[j];
+                tmp[i] = elements[j];
                 
             }
         }
         delete[] elements;
-        elements = placeHolder;
+        elements = tmp;*/
     }
 
+    /***
+    * Ellenőrzi, hogy egy String benne van- egy String tömben
+    * @param a a tömb
+    * @param str a String
+    * ***/
+    bool isIn(T e){
+        for (int i = 0; i < getLen(); ++i) {
+            if((*this)[i] == e){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
      /***
@@ -86,8 +113,6 @@ class Array{
     T operator[](int i) const{
         return elements[i];
     }
-
-
    
     /***
      *  Indexelő operátor

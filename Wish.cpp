@@ -39,19 +39,24 @@ void Wish::setName(String n){
 }
 
 
+
 /***
-     * Getter
-     * @return ajándékozó felhasználóneve, String
-     * ***/
-    String Wish::getGiver() const{
-        return giver;
+ * Getter
+ * @return ajándékozó felhasználóneve, String
+ * ***/
+String Wish::getGiver() const{
+    if(!isTaken){
+        throw "not taken";
     }
+    return giver;
+}
 
     /*** 
      * @param g ajándékozó
      * ***/
     void Wish::setGiver(String g){
         giver = g;
+        isTaken = true;
     }
 
     Wish& Wish::operator=(const Wish& w){

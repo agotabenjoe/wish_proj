@@ -13,7 +13,6 @@
      //std::cout<< "called";
          ListElement* iter = elements;
          while (iter != nullptr){
-             std::cout<< "called";
              ListElement* next = iter->getNext();
              delete iter;
              iter = next;

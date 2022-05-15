@@ -110,6 +110,12 @@ class User: public ListElement{
      * ***/
     void delGift(int i);
 
+    /***
+    * Töröl egy Giftet id alapján
+    * @param i a törlendő elem indexe a tömben
+    * ***/
+    void delGiftById(int id);
+
     User& operator=(const User& u);
 
     bool operator==(const User& u);

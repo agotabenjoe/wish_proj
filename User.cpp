@@ -101,11 +101,23 @@
     }
 
 /***
- * Töröl egy Wish-t
+ * Töröl egy Giftet
  * @param i a törlendő elem indexe a tömben
  * ***/
 void User::delGift(int i){
     gift.remove(i);
+}
+
+/***
+ * Töröl egy Giftet id alapján
+ * @param i a törlendő elem indexe a tömben
+ * ***/
+void User::delGiftById(int id){
+    for (int i = 0; i < gift.getLen(); ++i) {
+        if(gift[i] == id){
+            gift.remove(i);
+        }
+    }
 }
 
     User& User::operator=(const User& u){

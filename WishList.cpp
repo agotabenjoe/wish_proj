@@ -24,6 +24,21 @@
         return ownerWishes;
     }
 
+/***
+ * Id alapján visszad egy wisht
+ * @param int a keresett elem idje
+ * @return keresett wish
+ * ***/
+Wish* WishList::getWishbyId(int id){
+    Wish* wishById;
+    Wish* iter = dynamic_cast<Wish*>(elements); //castolás, hogy működjön az őssel
+    while (iter->getId() != id){
+        iter = dynamic_cast<Wish*>(iter->getNext());
+    }
+    wishById = iter;
+    return wishById;
+}
+
     /***
      * Ajándékozó felhasználóneve alapján visszaad egy Wish tömöbot, ahol az ajándékozó összes ajándéka benne van a tömbben
      * @param owner a tulaj felhasználóneve
@@ -40,3 +55,5 @@
         }
         return giverWishes;
     }
+
+

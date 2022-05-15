@@ -56,6 +56,7 @@ class Wish: public ListElement{
      * ***/
     String getGiver() const;
 
+
     /*** 
      * @param g ajándékozó
      * ***/
