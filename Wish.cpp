@@ -30,9 +30,16 @@
         return owner;
     }
 
-    ///TODO: setName
+    bool Wish::gotTaken() const{
+        return isTaken;
+    }
 
-    /***
+void Wish::setName(String n){
+    name = n;
+}
+
+
+/***
      * Getter
      * @return ajándékozó felhasználóneve, String
      * ***/

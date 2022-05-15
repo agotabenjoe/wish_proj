@@ -83,8 +83,59 @@ void userAndWishTest(UserList& users, WishList& wishes,char const *userName, cha
     }
 }
 
-void friendTest(){
+///TODO:majd refactorolni kell és belerakni az arrayba mint tagfüggvény és templatesíteni kell
+/***
+ * Ellenőrzi, hogy egy String benne van- egy String tömben
+ * @param a a tömb
+ * @param str a String
+ * ***/
+bool isIn(Array<String> a, String str){
+    for (int i = 0; i < a.getLen(); ++i) {
+        if(a[i] == str){
+            return true;
+        }
+    }
+    return false;
+}
 
+/***
+ * Teszteli, hogy két felhasználó barát e
+ * @param users a UserList referenciája
+ * @param requester a jelölő user username-e
+ * @param accepter a fogadó user username-e
+ * ***/
+void friendTest(UserList& users,char const *requester, char const *accepter){
+
+    User* rU = users.getUserbyUsername(requester);
+    User* aU = users.getUserbyUsername(accepter);
+
+    aU->addFriendRequest(requester);
+    aU->addFriend(requester);
+    rU->addFriend(accepter);
+
+    EXPECT_TRUE(isIn(aU->getFriends(),requester)) << accepter << " " << requester << " barat rossz" << std::endl;
+    EXPECT_TRUE(isIn(rU->getFriends(),accepter)) << requester << " " <<accepter << " barat rossz" << std::endl;
+}
+
+void giftingTest(UserList& users, WishList& wishes, char const *giver, char const *wisher){
+    //keresse meg azt a wisht, amit még nem vesz senki és ajándékozza oda azt és teszteljen arra
+    Array<Wish*> wisherWishes =  wishes.getWishbyOwner("Vader");
+
+    bool foundUntaken = false;
+    int idx = 0;
+    while (wisherWishes[idx]->gotTaken()){
+        idx++;
+    }
+    //ekkor meg van az első, aminek még nincs ajándékozva
+
+    User* gU = users.getUserbyUsername(giver);
+    User* wU = users.getUserbyUsername(wisher);
+
+    gU->addGift(wisherWishes[idx]->getId());
+    wisherWishes[idx]->setGiver(giver);
+
+    ///TODO:tesztelés
+    EXPECT_EQ(luke->getGifts()[0], wishes.getWishbyOwner("Han")[0]->getId()) << "Luke -> Han rossz" << std::endl;
 }
 
 int main(){
@@ -149,79 +200,23 @@ int main(){
         //UserList users = userFile.readUserData();
         //WishList wishes = wishFile.readWishData();
 
-        User* currentUser;
+        ///Luke-Han-Leia-Obi-Yoda-Vader
+        friendTest(users, "Luke", "Han");
+        friendTest(users, "Luke", "Leia");
+        friendTest(users, "Luke", "Obi-Wan");
+        friendTest(users, "Luke", "Yoda");
+        friendTest(users, "Luke", "Vader");
 
-        //Luke
-        currentUser = users.getUserbyUsername("Luke");
+        ///Han-Leia
+        friendTest(users, "Han", "Leia");
 
-        currentUser->addFriendRequest("Han");
-        currentUser->addFriendRequest("Leia");
-        currentUser->addFriendRequest("Vader");
-
-        EXPECT_EQ(currentUser->getFriends().getLen(), 0) << "Luke baratok rossz" << std::endl;
-
-        //Han
-        currentUser = users.getUserbyUsername("Han");
-
-        currentUser->addFriend("Luke");
-        currentUser->addFriendRequest("Leai");
-
-        EXPECT_EQ(currentUser->getFriends().getLen(), 1) << "Han baratok rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[0] == String("Luke")) << "Han Luke barat rossz" << std::endl;
-
-
-        //Leia
-        currentUser = users.getUserbyUsername("Leia");
-
-        currentUser->addFriend("Han");
-        currentUser->addFriend("Luke");
-
-        EXPECT_EQ(currentUser->getFriends().getLen(), 2) << "Leia baratok rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[0] == String("Han")) << "Leia Han barat rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[1] == String("Luke")) << "Leia Luke barat rossz" << std::endl;
-
-        //Vader
-        currentUser = users.getUserbyUsername("Vader");
-
-        currentUser->addFriend("Luke");
-        currentUser->addFriendRequest("Leia");
-
-        EXPECT_EQ(currentUser->getFriends().getLen(), 1) << "Vader baratok rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[0] ==  String("Luke")) << "Vader Luke barat rossz" << std::endl;
-
-        //Obi-Wan
-        currentUser = users.getUserbyUsername("Obi-Wan");
-
-        currentUser->addFriend("Luke");
-        currentUser->addFriend("Leia");
-        currentUser->addFriendRequest("Yoda");
-
-
-        EXPECT_EQ(currentUser->getFriends().getLen(), 2) << "Obi-Wan baratok rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[0] ==  String("Luke")) << "Obi-Wan Luke barat rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[1] ==  String("Leia")) << "Obi Leia barat rossz" << std::endl;
-        EXPECT_FALSE(currentUser->getFriends()[2] ==  String("Yoda")) << "Obi Yoda barat rossz" << std::endl;
-
-        //Yoda
-        currentUser = users.getUserbyUsername("Yoda");
-
-        currentUser->addFriend("Luke");
-        currentUser->addFriend("Obi-Wan");
-
-        EXPECT_EQ(currentUser->getFriends().getLen(), 2) << " Yodabaratok rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[0] ==  String("Luke")) << "Yoda Luke barat rossz" << std::endl;
-        EXPECT_TRUE(currentUser->getFriends()[1] ==  String("Obi-Wan")) << "Yoda Obi  barat rossz" << std::endl;
-
+        ///Obi--Leia-Yoda
+        friendTest(users, "Obi-Wan", "Leia");
+        friendTest(users, "Obi-Wan", "Yoda");
 
         //userFile.writeUserData(users);
         //wishFile.writeWishData(wishes);
-
-
     }ENDM
-
-
-
-
 
     //Ajándékok vásárlása
     TEST(Vasrlas, ajdekokVasarlasa){
