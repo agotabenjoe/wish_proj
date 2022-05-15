@@ -1,0 +1,26 @@
+[
+  {
+    "username": "Frodo",
+    "password": "meGye3000!",
+    "friends":["Bama","Mama","Sam"]
+    "friends_requests":["Aragorn","Gandalfino"]
+    "wishes":[1,2,4]
+    "gift":[123, 45]
+  },
+  {
+    "username": "Gandalf",
+    "password": "YouShallNotPass!",
+    "friends":[]
+    "friends_requests":["Frodo","Aragorn","Bama","Mama","Sam"]
+    "wishes":[]
+    "gift":[]
+  },
+  {
+    "username": "Aragorn",
+    "password": "King",
+    "friends":["Gandalf"]
+    "friends_requests":["Frodo"]
+    "wishes":[]
+    "gift":[]
+  }
+]
