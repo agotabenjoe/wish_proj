@@ -12,8 +12,8 @@ class Menu{
     protected:
     int command;
     bool menuRun;
-    WishList& wishlist;
-    UserList& userlist;
+    WishList& wishes;
+    UserList& users;
 
     public:
     /*** 
@@ -22,7 +22,7 @@ class Menu{
      * @param users a felhasználó lista
      * @param pr a főprogram futását irányító bool
      * ***/
-    Menu(bool& pr, WishList& wishes, UserList& users): programRun(pr), menuRun(false), wishlist(wishes), userlist(users){}
+    Menu(bool& pr, WishList& wishes, UserList& users): programRun(pr), menuRun(false), command(), wishes(wishes), users(users){}
 
     virtual void run();
 

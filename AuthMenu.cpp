@@ -18,7 +18,7 @@ void AuthMenu::run(){
         if(command >-1 && command < 4){
             switch (command) {
                 case 0:
-                    wishes();
+                    wishesMenu();
                     break;
                 case 1:
                     friends();
@@ -38,7 +38,7 @@ void AuthMenu::run(){
 
 }
 
-void AuthMenu::wishes() {
+void AuthMenu::wishesMenu() {
     bool subMenu = true;
     while (subMenu){
         std::cout << "Kívánságaim" << std::endl;
@@ -76,8 +76,8 @@ void AuthMenu::friends() {
     while (subMenu){
     std::cout << "Barátaim" << std::endl;
     int i = 0;
-    for (; i < currentUser.getFriends().getLen(); ++i) {
-        std::cout << i << "." << currentUser.getFriends()[i] << std::endl;
+    for (; i < currentUser->getFriends().getLen(); ++i) {
+        std::cout << i << "." << currentUser->getFriends()[i] << std::endl;
     }
     std::cout << ++i << ".Vissza" << std::endl;
 
@@ -89,9 +89,10 @@ void AuthMenu::friends() {
             bool subSubMenu = true;
             while (subSubMenu){
                 int j = 0;
-            for (; j < wishlist.getWishbyOwner(currentUser.getFriends()[command]).getLen(); ++j) {
-                if(!wishlist.getWishbyOwner(currentUser.getFriends()[command])[j]->gotTaken())
-                    std::cout << j << "." << wishlist.getWishbyOwner(currentUser.getFriends()[command])[j] << std::endl;
+
+            for (; j < wishes.getWishbyOwner(currentUser->getFriends()[command]).getLen(); ++j) {
+                if(!wishes.getWishbyOwner(currentUser->getFriends()[command])[j]->gotTaken())
+                    std::cout << j << "." << wishes.getWishbyOwner(currentUser->getFriends()[command])[j] << std::endl;
             }
             std::cout << ++j << ".Vissza" << std::endl;
             int command2;
@@ -99,8 +100,8 @@ void AuthMenu::friends() {
             if (command2 == i) {
                 subSubMenu = false;
             } else {
-                wishlist.getWishbyOwner(currentUser.getFriends()[command])[command2]->setGiver(currentUser.getUsername());
-                currentUser.addGift(wishlist.getWishbyOwner(currentUser.getFriends()[command])[command2]->getId());
+                wishes.getWishbyOwner(currentUser->getFriends()[command])[command2]->setGiver(currentUser->getUsername());
+                currentUser->addGift(wishes.getWishbyOwner(currentUser->getFriends()[command])[command2]->getId());
                 std::cout << "Sikeres művelet" << std::endl;
 
             }
@@ -122,8 +123,8 @@ void AuthMenu::wishesAdd(){
     String newName;
     std::cout << "Adjon meg egy új kívánságot:" << std::endl;
     Wish* newW;
-    newW = new Wish(newName,currentUser.getUsername());
-    wishlist.add(newW);
+    newW = new Wish(newName,currentUser->getUsername());
+    wishes.add(newW);
     std::cout << "Sikeres művelet:" << std::endl;
 }
 void AuthMenu::wishesUpdate(){
@@ -131,19 +132,19 @@ void AuthMenu::wishesUpdate(){
     String newName;
     std::cout << "Adjon meg egy új nevet:" << std::endl;
     std:: cin >> newName;
-    wishlist.getWishbyId(currentUser.getWishes()[command])->setName(newName);
+    wishes.getWishbyId(currentUser->getWishes()[command])->setName(newName);
     std::cout << "Sikeres művelet:" << std::endl;
 }
 
 void AuthMenu::wishesList() {
-        std::cout << "Kívánságaim" << std::endl;
-        for (int i = 0; i < currentUser.getWishes().getLen(); ++i) {
-            std::cout << i << "." << wishlist.getWishbyOwner(currentUser.getUsername())[i] << std::endl;
-        }
+        std::cout << "Kívánságaim:" << std::endl;
+        //wishes.printWishMenu(currentUser);
+
+        std::cout <<  currentUser->getUsername();
 }
 
 void AuthMenu::wishesRemove(){
     std:: cin >> command;
-    wishlist.remove(currentUser.getWishes()[command]);
+    wishes.remove(currentUser->getWishes()[command]);
     std::cout << "Sikeres művelet:" << std::endl;
 }

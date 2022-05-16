@@ -26,4 +26,8 @@ class UserList: public List{
      * @return a felhasználónévvel rendelkező User
      * ***/
     User* getUserbyUsername(String Username);
+
+    void userFromConsole();
+
+    User* signInFromConsole();
 };

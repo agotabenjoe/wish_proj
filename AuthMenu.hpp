@@ -4,7 +4,7 @@
 #include "Menu.hpp"
 
 class AuthMenu: public Menu{
-    User& currentUser;
+    User* currentUser;
 
     public:
     /*** 
@@ -14,11 +14,11 @@ class AuthMenu: public Menu{
      * @param pr a főprogram futását irányító bool
      * @param cUser a bejelentkezett felhasználó
      * ***/
-    AuthMenu(WishList& wishes, UserList& users, bool& pr, User& cUser):Menu(pr, wishes, users), currentUser(cUser){}
+    AuthMenu(WishList& wishes, UserList& users, bool& pr, User* cUser):Menu(pr, wishes, users), currentUser(cUser){}
 
     void run();
 
-    void wishes();
+    void wishesMenu();
 
     void friends();
 

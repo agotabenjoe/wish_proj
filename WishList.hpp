@@ -5,7 +5,7 @@
 #include "ListElement.hpp"
 #include "Wish.hpp"
 #include "Array.hpp"
-///TODO: a removot maj ellenőrizni kell hogy jól szabadít-e fel
+#include "User.hpp"
 class WishList: public List{
     public:
     /*** 
@@ -34,5 +34,8 @@ class WishList: public List{
     Array<Wish*> getWishbyGiver(String giver);
 
     Wish* getWishbyId(int id);
+
+    ///Ki listázza egy user wisheit mint menüelemeket
+    void printWishMenu(User* u);
 
 };

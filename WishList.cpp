@@ -6,6 +6,7 @@
 #include "Array.hpp"
 #include "String.hpp"
 #include "List.hpp"
+#include "User.hpp"
 
 /***
      * Tulaj felhasználóneve alapján visszaad egy Wish tömöbot, ahol a tulaj összese Wish-e benne van tömben
@@ -56,4 +57,12 @@ Wish* WishList::getWishbyId(int id){
         return giverWishes;
     }
 
+///Ki listázza egy user wisheit mint menüelemeket
+void WishList::printWishMenu(User* u){
+    //    int a = u->getWishes().getLen();
+    //for (int i = 0; i < 2; ++i) {
+      //  std::cout << i << " . " ;//<< getWishbyOwner(u->getUsername())[i] << std::endl;
+    //}
+
+}
 

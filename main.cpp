@@ -3,7 +3,6 @@
 #define MODE 1
 ///1 - menüvezérelt működés
 ///2 - teszt futtatása
-///3 - fájlkezelés teszt
 
 #include <iostream>
 #include <sstream>
@@ -32,15 +31,21 @@ int main(){
     JSONParser wishFile("wishes.json");
     WishList wishes = wishFile.readWishData();
 
-    User currentUser;
+    User* currentUser;
 
-    Menu welcomeMenu = Menu(programRun,wishes, users);
+    Menu welcomeMenu(programRun,wishes, users);
+
+    currentUser;
+    //TODO::a listázást be kell fejezni a current userese error ki lett javítva
+
 
     while(programRun){
         welcomeMenu.run();
-        currentUser = (*(welcomeMenu.signIn()));
-        Menu mainMenu = AuthMenu(wishes, users, programRun, currentUser);
-        mainMenu.run();
+        currentUser = welcomeMenu.signIn();
+        if(currentUser != nullptr){
+            AuthMenu mainMenu(wishes, users, programRun, currentUser);
+            mainMenu.run();
+        }
     }
 
     userFile.writeUserData(users);
