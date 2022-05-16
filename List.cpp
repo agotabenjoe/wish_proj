@@ -18,8 +18,12 @@
              iter = next;
          }
     }
-    
-    /*** 
+int List::getLen(){
+    return len;
+     }
+
+
+/***
      * Hozzádja a dinamikusan foglalat elemet a listához
      * @param newElement dinamikusan foglalt listaelem
      * ***/

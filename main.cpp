@@ -1,6 +1,6 @@
 #pragma once
 #define MEMTRACE
-#define MODE 3
+#define MODE 2
 ///1 - menüvezérelt működés
 ///2 - teszt futtatása
 ///3 - fájlkezelés teszt
@@ -170,14 +170,16 @@ void delGiftTest(UserList& users, WishList& wishes, char const *wisher, int idx)
 
 int main(){
 
-    JSONParser userFile("example.json");
-    UserList users = userFile.readUserData();
 
-    JSONParser wishFile("wishes.json");
-    WishList wishes = wishFile.readWishData();
 
     ///regisztráció és ajándékok hozzáadása
     TEST(Regisztralas, regisztralasESAjandekok){
+            JSONParser userFile("example.json");
+            UserList users; //= userFile.readUserData();
+
+            //JSONParser wishFile("wishes.json");
+            WishList wishes; //= wishFile.readWishData();
+
 
         ///Luke
         Array<String> lukeWish;
@@ -221,103 +223,117 @@ int main(){
         vaderWish.add("fenykard");
         userAndWishTest(users, wishes,"Vader", "ahmmhmh", vaderWish);
 
-        //userFile.writeUserData(users);
-        //wishFile.writeWishData(wishes);
+            userFile.writeUserData(users);
+            //wishFile.writeWishData(wishes);
+
+
     } ENDM
 
-    ///Barát jelölések és elfogadások
-    TEST(Baratok, jelolesekEsFogadasok){
-        //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
-        //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
+       ///Barát jelölések és elfogadások
+       TEST(Baratok, jelolesekEsFogadasok){
+           //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
+           //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
 
-        //UserList users = userFile.readUserData();
-        //WishList wishes = wishFile.readWishData();
+           //UserList users = userFile.readUserData();
+           //WishList wishes = wishFile.readWishData();
+              JSONParser userFile("example.json");
+               UserList users = userFile.readUserData();
 
-        ///Luke-Han-Leia-Obi-Yoda-Vader
-        friendTest(users, "Luke", "Han");
-        friendTest(users, "Luke", "Leia");
-        friendTest(users, "Luke", "Obi-Wan");
-        friendTest(users, "Luke", "Yoda");
-        friendTest(users, "Luke", "Vader");
+               JSONParser wishFile("wishes.json");
+               WishList wishes  = wishFile.readWishData();
 
-        ///Han-Leia
-        friendTest(users, "Han", "Leia");
+           ///Luke-Han-Leia-Obi-Yoda-Vader
+           friendTest(users, "Luke", "Han");
+           friendTest(users, "Luke", "Leia");
+           friendTest(users, "Luke", "Obi-Wan");
+           friendTest(users, "Luke", "Yoda");
+           friendTest(users, "Luke", "Vader");
 
-        ///Obi--Leia-Yoda
-        friendTest(users, "Obi-Wan", "Leia");
-        friendTest(users, "Obi-Wan", "Yoda");
+           ///Han-Leia
+           friendTest(users, "Han", "Leia");
 
-        //userFile.writeUserData(users);
-        //wishFile.writeWishData(wishes);
-    }ENDM
+           ///Obi--Leia-Yoda
+           friendTest(users, "Obi-Wan", "Leia");
+           friendTest(users, "Obi-Wan", "Yoda");
 
-    ///Ajándékok vásárlása
-    TEST(Vasrlas, ajdekokVasarlasa){
-        //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
-        //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
+           //userFile.writeUserData(users);
+           //wishFile.writeWishData(wishes);
 
-        //UserList users = userFile.readUserData();
-        //WishList wishes = wishFile.readWishData();
+               userFile.writeUserData(users);
+               //wishFile.writeWishData(wishes);
+       }ENDM
+/*
+      ///Ajándékok vásárlása
+       TEST(Vasrlas, ajdekokVasarlasa){
+           //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
+           //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
 
-        ///Luke
-        giftingTest(users, wishes, "Luke", "Han");
-        giftingTest(users, wishes, "Luke", "Leia");
-        giftingTest(users, wishes, "Luke", "Vader");
+           //UserList users = userFile.readUserData();
+           //WishList wishes = wishFile.readWishData();
 
-        ///Han
-        giftingTest(users, wishes, "Han", "Leia");
-        giftingTest(users, wishes, "Han", "Luke");
+           ///Luke
+           giftingTest(users, wishes, "Luke", "Han");
+           giftingTest(users, wishes, "Luke", "Leia");
+           giftingTest(users, wishes, "Luke", "Vader");
 
-        ///Leia
-        giftingTest(users, wishes, "Leia", "Han");
-        giftingTest(users, wishes, "Leia", "Han");
-        giftingTest(users, wishes, "Leia", "Luke");
+           ///Han
+           giftingTest(users, wishes, "Han", "Leia");
+           giftingTest(users, wishes, "Han", "Luke");
 
-        ///Vader
-        giftingTest(users, wishes, "Vader", "Luke");
+           ///Leia
+           giftingTest(users, wishes, "Leia", "Han");
+           giftingTest(users, wishes, "Leia", "Han");
+           giftingTest(users, wishes, "Leia", "Luke");
 
-        ///Obi-Wan
-        giftingTest(users, wishes, "Obi-Wan", "Yoda");
+           ///Vader
+           giftingTest(users, wishes, "Vader", "Luke");
 
-        ///Yoda
-        giftingTest(users, wishes, "Yoda", "Obi-Wan");
+           ///Obi-Wan
+           giftingTest(users, wishes, "Obi-Wan", "Yoda");
 
-        //userFile.writeUserData(users);
-        //wishFile.writeWishData(wishes);
-    }ENDM
+           ///Yoda
+           giftingTest(users, wishes, "Yoda", "Obi-Wan");
 
-    //Ajándékok törlése
-    TEST(Torles, ajendekokTorlese){
-        //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
-        //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
+           //userFile.writeUserData(users);
+           //wishFile.writeWishData(wishes);
+               userFile.writeUserData(users);
 
-        //UserList users = userFile.readUserData();
-        //WishList wishes = wishFile.readWishData();
+           }ENDM
 
-        ///Luke nem kér Vadertől
-        delGiftTest(users, wishes, "Luke",0);
+       //Ajándékok törlése
+       TEST(Torles, ajendekokTorlese){
+           //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
+           //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
 
-        ///Luke nem kér Hantól
-        delGiftTest(users, wishes, "Luke", 0);
+           //UserList users = userFile.readUserData();
+           //WishList wishes = wishFile.readWishData();
 
-        ///Obi-Wan nem kér Yoda-tól
-        delGiftTest(users, wishes, "Obi-Wan", 0);
+           ///Luke nem kér Vadertől
+           delGiftTest(users, wishes, "Luke",0);
 
-        ///Leia nem kér Han-tól
-        delGiftTest(users, wishes, "Leia", 1);
+           ///Luke nem kér Hantól
+           delGiftTest(users, wishes, "Luke", 0);
 
-        ///Vader nem kér Luke-tól
-        delGiftTest(users, wishes, "Vader", 0);
+           ///Obi-Wan nem kér Yoda-tól
+           delGiftTest(users, wishes, "Obi-Wan", 0);
 
-        ///Vader nem kér egyet
-        delGiftTest(users, wishes, "Vader", 0);
+           ///Leia nem kér Han-tól
+           delGiftTest(users, wishes, "Leia", 1);
 
-        ///Vader nem kér egyet
-        delGiftTest(users, wishes, "Vader", 0);
+           ///Vader nem kér Luke-tól
+           delGiftTest(users, wishes, "Vader", 0);
 
-        //userFile.writeUserData(users);
-        //wishFile.writeWishData(wishes);
-    }ENDM
+           ///Vader nem kér egyet
+           delGiftTest(users, wishes, "Vader", 0);
+
+           ///Vader nem kér egyet
+           delGiftTest(users, wishes, "Vader", 0);
+
+           //userFile.writeUserData(users);
+           //wishFile.writeWishData(wishes);
+       }ENDM
+   */
+
 
     return  0;
 }

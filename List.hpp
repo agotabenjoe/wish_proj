@@ -39,6 +39,8 @@ class List{
      * ***/
     virtual void remove(int id);
 
+    int getLen();
+
      /*** 
      * 0.tól kezdődő konstans indexelő operátor
      * @param idx index

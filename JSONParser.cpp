@@ -53,6 +53,8 @@ UserList JSONParser::readUserData() {
     String nWish;
     String nGift;
 
+    int len =  0;
+
     char ch;
     state = reading;
     while ((ch = fgetc(file)) != EOF){
@@ -99,6 +101,7 @@ UserList JSONParser::readUserData() {
                 }
                 break;
             case friends:
+                len = 0;
                 nFriend = "";
                 if(ch == ','  || ch== '[')
                     state = newfriend;
@@ -112,21 +115,28 @@ UserList JSONParser::readUserData() {
                 break;
             case newfriend:
                 if( ch == ']'){
-                    newUser->addFriend(nFriend);
+                    if(len>0){
+                        newUser->addFriend(nFriend);
+                    }
                     state = friendrequests;
                 } else
                 if(ch == ','){
-                    newUser->addFriend(nFriend);
+                    if(len>0){
+                        newUser->addFriend(nFriend);
+                    }
                     state = friendsmiddle;
                 }
                 else {
                     if(ch != '\"'){
-                        if(ch != ' ')
+                        if(ch != ' '){
+                            len++;
                             nFriend = nFriend + ch;
+                        }
                     }
                 }
                 break;
             case friendrequests:
+                len = 0;
                 request = "";
                 if(ch == ','  || ch== '[')
                     state = newfriendrequests;
@@ -140,20 +150,27 @@ UserList JSONParser::readUserData() {
                 break;
             case newfriendrequests:
                 if( ch == ']'){
-                    newUser->addFriendRequest(request);
+                    if(len>0){
+                        newUser->addFriendRequest(request);
+                    }
                     state = wish;
                 }
                 if(ch == ','){
-                    newUser->addFriendRequest(request);
+                    if(len>0){
+                        newUser->addFriendRequest(request);
+                    }
                     state = friendrequestsmiddle;
                 }
                 else {
                     if(ch != '\"')
-                        if(ch != ' ')
+                        if(ch != ' '){
+                            len++;
                             request = request + ch;
+                        }
                 }
                 break;
             case wish:
+                len = 0;
                 nWish = "";
                 if(ch == ','  || ch== '[')
                     state = newwish;
@@ -162,29 +179,38 @@ UserList JSONParser::readUserData() {
                 break;
             case newwish:
                 if( ch == ']'){
-                    stringstream tmp;
-                    tmp << nWish;
-                    int w;
-                    tmp >> w;
-                    newUser->addWish((w));
+                    if(len>0){
+                        stringstream tmp;
+                        tmp << nWish;
+                        int w;
+                        tmp >> w;
+                        newUser->addWish((w));
+                    }
                     state = gift;
                 }
                 if(ch == ','){
-                    stringstream tmp;
-                    tmp << nWish;
-                    int w;
-                    tmp >> w;
-                    newUser->addWish((w));
+                    if(len>0){
+                        stringstream tmp;
+                        tmp << nWish;
+                        int w;
+                        tmp >> w;
+                        newUser->addWish((w));
+                    }
+                    len = 0;
                     nWish = "";
                     state = newwish;
                 }
                 else {
                     if(ch != '\"')
-                        if(ch != ' ')
+                        if(ch != ' '){
+                            len++;
                             nWish = nWish + ch;
+                        }
+
                 }
                 break;
             case gift:
+                len = 0;
                 nGift = "";
                 if(ch == ','  || ch== '[')
                     state = newgift;
@@ -193,26 +219,34 @@ UserList JSONParser::readUserData() {
                 break;
             case newgift:
                 if( ch == ']'){
-                    stringstream tmp;
-                    tmp << nGift;
-                    int g;
-                    tmp >> g;
-                    newUser->addGift((g));
+                    if(len >0){
+                        stringstream tmp;
+                        tmp << nGift;
+                        int g;
+                        tmp >> g;
+                        newUser->addGift((g));
+                    }
                     state = reading;
                 }
                 if(ch == ','){
-                    stringstream tmp;
-                    tmp << nGift;
-                    int g;
-                    tmp >> g;
-                    newUser->addGift((g));
+                    if(len >0){
+                        stringstream tmp;
+                        tmp << nGift;
+                        int g;
+                        tmp >> g;
+                        newUser->addGift((g));
+                    }
+                    len = 0;
                     nGift = "";
                     state = newgift;
                 }
                 else {
                     if(ch != '\"')
-                        if(ch != ' ')
+                        if(ch != ' '){
+                            len++;
                             nGift = nGift + ch;
+                        }
+
                 }
                 break;
         }
@@ -332,4 +366,61 @@ WishList JSONParser::readWishData()  {
 
     fclose(file);
     return wishes;
+}
+
+void JSONParser::writeUserData(UserList &users) {
+    file = fopen(fileName.c_str(), "w");
+
+    fprintf(file, "[\n");
+    for (int i = 0; i < users.getLen()+1; ++i) {
+        fprintf(file,"{\n\"username\": \"%s\",\n \"password\": \"%s\",\n", dynamic_cast<User*>(users[i])->getUsername().c_str(), dynamic_cast<User*>(users[i])->getPassword().c_str());
+
+       fprintf(file,"\"friends\":[");
+        for (int j = 0; j < dynamic_cast<User*>(users[i])->getFriends().getLen(); ++j) {
+            if((dynamic_cast<User*>(users[i])->getFriends().getLen() - 1 )== j){
+                fprintf(file,"\"%s\"", dynamic_cast<User*>(users[i])->getFriends()[j].c_str());
+            }else{
+                fprintf(file,"\"%s\", ", dynamic_cast<User*>(users[i])->getFriends()[j].c_str());
+            }
+        }
+        fprintf(file,"]\n");
+
+        fprintf(file,"\"friendrequests\":[");
+        for (int j = 0; j < dynamic_cast<User*>(users[i])->getFriendRequests().getLen(); ++j) {
+            if((dynamic_cast<User*>(users[i])->getFriendRequests().getLen() - 1 )== j){
+                fprintf(file,"\"%s\"", dynamic_cast<User*>(users[i])->getFriendRequests()[j].c_str());
+            }else{
+                fprintf(file,"\"%s\", ", dynamic_cast<User*>(users[i])->getFriendRequests()[j].c_str());
+            }
+        }
+        fprintf(file,"]\n");
+
+        fprintf(file,"\"wish\":[");
+        for (int j = 0; j < dynamic_cast<User*>(users[i])->getWishes().getLen(); ++j) {
+            if((dynamic_cast<User*>(users[i])->getWishes().getLen() - 1 )== j){
+                fprintf(file,"%d", dynamic_cast<User*>(users[i])->getWishes()[j]);
+            }else{
+                fprintf(file,"%d, ", dynamic_cast<User*>(users[i])->getWishes()[j]);
+            }
+        }
+        fprintf(file,"]\n");
+
+        fprintf(file,"\"gift\":[");
+        for (int j = 0; j < dynamic_cast<User*>(users[i])->getGifts().getLen(); ++j) {
+            if((dynamic_cast<User*>(users[i])->getGifts().getLen() - 1 )== j){
+                fprintf(file,"%d", dynamic_cast<User*>(users[i])->getGifts()[j]);
+            }else{
+                fprintf(file,"%d, ", dynamic_cast<User*>(users[i])->getGifts()[j]);
+            }
+        }
+        fprintf(file,"]\n");
+
+        fprintf(file, "},\n");
+    }
+    fprintf(file, "]");
+    fclose(file);
+}
+
+void JSONParser::writeWishData(WishList &wishes){
+
 }
