@@ -46,5 +46,11 @@ class ListElement{
      * ***/
     void setNext(ListElement* newNext);
 
+    /***
+     * Setter: Beállít új idt
+     * @param i új id
+     * ***/
+    void setId(int i);
+
     
 };

@@ -109,6 +109,30 @@ void User::sePassword(String newPassword){
     }
 
 /***
+ * Töröl egy FriendRequiestet
+ * @param toDel a törlendő elem
+ * ***/
+void User::delFriendRequest(String toDel){
+    for (int i = 0; i < friendRequests.getLen(); ++i) {
+        if(friendRequests[i] == toDel){
+            friendRequests.remove(i);
+        }
+    }
+}
+
+/***
+ * Töröl egy Wisht
+ * @param toDel a törlendő elem
+ * ***/
+void User::delWishById(int toDel){
+    for (int i = 0; i < wishes.getLen(); ++i) {
+        if(wishes[i] == toDel){
+            wishes.remove(i);
+        }
+    }
+}
+
+/***
  * Töröl egy Giftet
  * @param i a törlendő elem indexe a tömben
  * ***/

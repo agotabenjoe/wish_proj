@@ -276,6 +276,8 @@ WishList JSONParser::readWishData()  {
         name,
         owner,
         giver,
+        number,
+        waitfornumber,
         waitforname,
         waitforowner,
         waitforgiver,
@@ -287,10 +289,12 @@ WishList JSONParser::readWishData()  {
     WishList wishes;
     Wish* newWish;
 
+    int id;
     String n;
     String o;
     String g;
     int gLen = 0;
+    String nId;
 
     char ch;
     state = reading;
@@ -304,7 +308,35 @@ WishList JSONParser::readWishData()  {
             case nwish:
                 newWish = new Wish;
                 wishes.add(newWish);
-                state = waitforname2;
+                state = waitfornumber;
+                break;
+            case waitfornumber:
+                gLen = 0;
+                nId = "";
+                if(ch == ':')
+                    state = number;
+                break;
+            case number:
+                if(ch == ','){
+                    if(gLen >0){
+                        stringstream tmp;
+                        tmp << nId;
+                        int i;
+                        tmp >> i;
+                        newWish->setId(i);
+                    }
+                    gLen = 0;
+                    nId = "";
+                    state = waitforname2;
+                }
+                else {
+                    if(ch != '\"'){
+                        if(ch != ' '){
+                            gLen++;
+                            nId = nId + ch;
+                        }
+                    }
+                }
                 break;
             case waitforname2:
                 if(ch == ':')
@@ -428,9 +460,9 @@ void JSONParser::writeWishData(WishList &wishes){
 
     for (int i = 0; i < wishes.getLen()+1; ++i) {
         if(dynamic_cast<Wish*>(wishes[i])->gotTaken()){
-            fprintf(file,"{\n\"name\":\"%s\",\n\"owner\":\"%s\",\n\"giver\":\"%s\"\n},\n",  dynamic_cast<Wish*>(wishes[i])->getName().c_str(),dynamic_cast<Wish*>(wishes[i])->getOwner().c_str(),dynamic_cast<Wish*>(wishes[i])->getGiver().c_str());
+            fprintf(file,"{\n\"id\":%d,\n\"name\":\"%s\",\n\"owner\":\"%s\",\n\"giver\":\"%s\"\n},\n", dynamic_cast<Wish*>(wishes[i])->getId() ,dynamic_cast<Wish*>(wishes[i])->getName().c_str(),dynamic_cast<Wish*>(wishes[i])->getOwner().c_str(),dynamic_cast<Wish*>(wishes[i])->getGiver().c_str());
         }else{
-            fprintf(file,"{\n\"name\":\"%s\",\n\"owner\":\"%s\",\n\"giver\":\"\"\n},\n",  dynamic_cast<Wish*>(wishes[i])->getName().c_str(),dynamic_cast<Wish*>(wishes[i])->getOwner().c_str());
+            fprintf(file,"{\n\"id\":%d,\n\"name\":\"%s\",\n\"owner\":\"%s\",\n\"giver\":\"\"\n},\n",  dynamic_cast<Wish*>(wishes[i])->getId(),dynamic_cast<Wish*>(wishes[i])->getName().c_str(),dynamic_cast<Wish*>(wishes[i])->getOwner().c_str());
         }
     }
     fprintf(file, "]");

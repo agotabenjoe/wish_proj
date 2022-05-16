@@ -34,3 +34,11 @@ ListElement::ListElement(const ListElement& l){
     void ListElement::setNext(ListElement* newNext){
         next = newNext;
     }
+
+/***
+* Setter: Beállít új idt
+* @param i új id
+* ***/
+void ListElement::setId(int i){
+    uid = i;
+}

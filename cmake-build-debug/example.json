@@ -11,7 +11,7 @@
 "username": "Obi-Wan",
  "password": "hellothere",
 "friends":["Luke", "Leia", "Yoda"]
-"friendrequests":["Luke"]
+"friendrequests":[]
 "wish":[7, 8, 9]
 "gift":[11]
 },
@@ -19,7 +19,7 @@
 "username": "Yoda",
  "password": "grammardoyoueven",
 "friends":["Luke", "Obi-Wan"]
-"friendrequests":["Luke", "Obi-Wan"]
+"friendrequests":[]
 "wish":[11]
 "gift":[]
 },
@@ -27,7 +27,7 @@
 "username": "Han",
  "password": "IShotFirst",
 "friends":["Luke", "Leia"]
-"friendrequests":["Luke"]
+"friendrequests":[]
 "wish":[13, 14, 15]
 "gift":[]
 },
@@ -35,7 +35,7 @@
 "username": "Leia",
  "password": "alderaan",
 "friends":["Luke", "Han", "Obi-Wan"]
-"friendrequests":["Luke", "Han", "Obi-Wan"]
+"friendrequests":[]
 "wish":[17]
 "gift":[14, 15]
 },
@@ -43,7 +43,7 @@
 "username": "Vader",
  "password": "ahmmhmh",
 "friends":["Luke"]
-"friendrequests":["Luke"]
+"friendrequests":[]
 "wish":[]
 "gift":[3]
 },

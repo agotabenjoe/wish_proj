@@ -78,7 +78,7 @@ class User: public ListElement{
 
     void sePassword(String newPassword);
 
-
+    void delFriendRequest(String toDel);
 
     /*** 
      * Hozzáadó
@@ -121,6 +121,8 @@ class User: public ListElement{
     * @param i a törlendő elem indexe a tömben
     * ***/
     void delGiftById(int id);
+
+    void delWishById(int toDel);
 
     User& operator=(const User& u);
 

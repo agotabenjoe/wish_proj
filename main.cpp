@@ -1,7 +1,6 @@
 #pragma once
 #define MEMTRACE
 #define MODE 1
-#define GLOBALJSON true
 ///1 - menüvezérelt működés
 ///2 - teszt futtatása
 ///3 - fájlkezelés teszt
@@ -26,10 +25,11 @@
 int main(){
     bool programRun = true;
 
-    JSONParser userFile = JSONParser("userfajl eleresi ut");
-    JSONParser wishFile = JSONParser("wishfajl eleresi ut");
 
+    JSONParser userFile("example.json");
     UserList users = userFile.readUserData();
+
+    JSONParser wishFile("wishes.json");
     WishList wishes = wishFile.readWishData();
 
     User currentUser;
@@ -117,6 +117,7 @@ void friendTest(UserList& users,char const *requester, char const *accepter){
     aU->addFriendRequest(requester);
     aU->addFriend(requester);
     rU->addFriend(accepter);
+    aU->delFriendRequest(requester);
 
     EXPECT_TRUE(isIn(aU->getFriends(),requester)) << accepter << " " << requester << " barat rossz" << std::endl;
     EXPECT_TRUE(isIn(rU->getFriends(),accepter)) << requester << " " <<accepter << " barat rossz" << std::endl;
@@ -173,15 +174,14 @@ void delGiftTest(UserList& users, WishList& wishes, char const *wisher, int idx)
 
 int main(){
 
-
-    JSONParser userFile("example.json");
-    UserList users;// = userFile.readUserData();
-
-    JSONParser wishFile("wishes.json");
-    WishList wishes; //= wishFile.readWishData();
-
     ///regisztráció és ajándékok hozzáadása
     TEST(Regisztralas, regisztralasESAjandekok){
+
+            JSONParser userFile("example.json");
+            UserList users;
+
+            JSONParser wishFile("wishes.json");
+            WishList wishes;
 
 
         ///Luke
@@ -226,10 +226,17 @@ int main(){
         vaderWish.add("fenykard");
         userAndWishTest(users, wishes,"Vader", "ahmmhmh", vaderWish);
 
+            userFile.writeUserData(users);
+            wishFile.writeWishData(wishes);
     } ENDM
 
        ///Barát jelölések és elfogadások
        TEST(Baratok, jelolesekEsFogadasok){
+               JSONParser userFile("example.json");
+               UserList users = userFile.readUserData();
+
+               JSONParser wishFile("wishes.json");
+               WishList wishes = wishFile.readWishData();
 
            ///Luke-Han-Leia-Obi-Yoda-Vader
            friendTest(users, "Luke", "Han");
@@ -245,10 +252,17 @@ int main(){
            friendTest(users, "Obi-Wan", "Leia");
            friendTest(users, "Obi-Wan", "Yoda");
 
+               userFile.writeUserData(users);
+               wishFile.writeWishData(wishes);
        }ENDM
 
       ///Ajándékok vásárlása
-       TEST(Vasrlas, ajdekokVasarlasa){
+       TEST(Vasrlas, ajandekokVasarlasa){
+               JSONParser userFile("example.json");
+               UserList users = userFile.readUserData();
+
+               JSONParser wishFile("wishes.json");
+               WishList wishes = wishFile.readWishData();
 
            ///Luke
            giftingTest(users, wishes, "Luke", "Han");
@@ -273,11 +287,17 @@ int main(){
            ///Yoda
            giftingTest(users, wishes, "Yoda", "Obi-Wan");
 
+               userFile.writeUserData(users);
+               wishFile.writeWishData(wishes);
            }ENDM
 
-       //Ajándékok törlése
+       ///Ajándékok törlése
        TEST(Torles, ajendekokTorlese){
+               JSONParser userFile("example.json");
+               UserList users = userFile.readUserData();
 
+               JSONParser wishFile("wishes.json");
+               WishList wishes = wishFile.readWishData();
 
            ///Luke nem kér Vadertől
            delGiftTest(users, wishes, "Luke",0);
@@ -300,11 +320,11 @@ int main(){
            ///Vader nem kér egyet
            delGiftTest(users, wishes, "Vader", 0);
 
-
+               userFile.writeUserData(users);
+               wishFile.writeWishData(wishes);
 
        }ENDM
-    userFile.writeUserData(users);
-    wishFile.writeWishData(wishes);
+
     return  0;
 }
 #endif
