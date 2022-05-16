@@ -26,8 +26,6 @@ class AuthMenu: public Menu{
 
     void addFriend();
 
-    void signOut();
-
     void wishesAdd();
 
     void wishesList();

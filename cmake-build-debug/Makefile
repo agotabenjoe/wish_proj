@@ -129,6 +129,30 @@ wish_proj/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/build
 .PHONY : wish_proj/fast
 
+AuthMenu.o: AuthMenu.cpp.o
+.PHONY : AuthMenu.o
+
+# target to build an object file
+AuthMenu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/AuthMenu.cpp.o
+.PHONY : AuthMenu.cpp.o
+
+AuthMenu.i: AuthMenu.cpp.i
+.PHONY : AuthMenu.i
+
+# target to preprocess a source file
+AuthMenu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/AuthMenu.cpp.i
+.PHONY : AuthMenu.cpp.i
+
+AuthMenu.s: AuthMenu.cpp.s
+.PHONY : AuthMenu.s
+
+# target to generate assembly for a file
+AuthMenu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/AuthMenu.cpp.s
+.PHONY : AuthMenu.cpp.s
+
 JSONParser.o: JSONParser.cpp.o
 .PHONY : JSONParser.o
 
@@ -200,6 +224,30 @@ ListElement.s: ListElement.cpp.s
 ListElement.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/ListElement.cpp.s
 .PHONY : ListElement.cpp.s
+
+Menu.o: Menu.cpp.o
+.PHONY : Menu.o
+
+# target to build an object file
+Menu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/Menu.cpp.o
+.PHONY : Menu.cpp.o
+
+Menu.i: Menu.cpp.i
+.PHONY : Menu.i
+
+# target to preprocess a source file
+Menu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/Menu.cpp.i
+.PHONY : Menu.cpp.i
+
+Menu.s: Menu.cpp.s
+.PHONY : Menu.s
+
+# target to generate assembly for a file
+Menu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wish_proj.dir/build.make CMakeFiles/wish_proj.dir/Menu.cpp.s
+.PHONY : Menu.cpp.s
 
 String.o: String.cpp.o
 .PHONY : String.o
@@ -378,6 +426,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... wish_proj"
+	@echo "... AuthMenu.o"
+	@echo "... AuthMenu.i"
+	@echo "... AuthMenu.s"
 	@echo "... JSONParser.o"
 	@echo "... JSONParser.i"
 	@echo "... JSONParser.s"
@@ -387,6 +438,9 @@ help:
 	@echo "... ListElement.o"
 	@echo "... ListElement.i"
 	@echo "... ListElement.s"
+	@echo "... Menu.o"
+	@echo "... Menu.i"
+	@echo "... Menu.s"
 	@echo "... String.o"
 	@echo "... String.i"
 	@echo "... String.s"

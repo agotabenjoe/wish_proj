@@ -1,6 +1,7 @@
 #pragma once
 #define MEMTRACE
-#define MODE 2
+#define MODE 1
+#define GLOBALJSON true
 ///1 - menüvezérelt működés
 ///2 - teszt futtatása
 ///3 - fájlkezelés teszt
@@ -15,6 +16,8 @@
 #include "List.hpp"
 #include "UserList.hpp"
 #include "WishList.hpp"
+#include "Menu.hpp"
+#include "AuthMenu.hpp"
 
 
 #if MODE == 1
@@ -31,11 +34,11 @@ int main(){
 
     User currentUser;
 
-    Menu welcomeMenu = Menu(wishes, users, programRun);
+    Menu welcomeMenu = Menu(programRun,wishes, users);
 
     while(programRun){
         welcomeMenu.run();
-        currentUser = welcomeMenu.signIn();
+        currentUser = (*(welcomeMenu.signIn()));
         Menu mainMenu = AuthMenu(wishes, users, programRun, currentUser);
         mainMenu.run();
     }
@@ -171,14 +174,14 @@ void delGiftTest(UserList& users, WishList& wishes, char const *wisher, int idx)
 int main(){
 
 
+    JSONParser userFile("example.json");
+    UserList users;// = userFile.readUserData();
+
+    JSONParser wishFile("wishes.json");
+    WishList wishes; //= wishFile.readWishData();
 
     ///regisztráció és ajándékok hozzáadása
     TEST(Regisztralas, regisztralasESAjandekok){
-            JSONParser userFile("example.json");
-            UserList users; //= userFile.readUserData();
-
-            //JSONParser wishFile("wishes.json");
-            WishList wishes; //= wishFile.readWishData();
 
 
         ///Luke
@@ -223,24 +226,10 @@ int main(){
         vaderWish.add("fenykard");
         userAndWishTest(users, wishes,"Vader", "ahmmhmh", vaderWish);
 
-            userFile.writeUserData(users);
-            //wishFile.writeWishData(wishes);
-
-
     } ENDM
 
        ///Barát jelölések és elfogadások
        TEST(Baratok, jelolesekEsFogadasok){
-           //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
-           //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
-
-           //UserList users = userFile.readUserData();
-           //WishList wishes = wishFile.readWishData();
-              JSONParser userFile("example.json");
-               UserList users = userFile.readUserData();
-
-               JSONParser wishFile("wishes.json");
-               WishList wishes  = wishFile.readWishData();
 
            ///Luke-Han-Leia-Obi-Yoda-Vader
            friendTest(users, "Luke", "Han");
@@ -256,20 +245,10 @@ int main(){
            friendTest(users, "Obi-Wan", "Leia");
            friendTest(users, "Obi-Wan", "Yoda");
 
-           //userFile.writeUserData(users);
-           //wishFile.writeWishData(wishes);
-
-               userFile.writeUserData(users);
-               //wishFile.writeWishData(wishes);
        }ENDM
-/*
+
       ///Ajándékok vásárlása
        TEST(Vasrlas, ajdekokVasarlasa){
-           //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
-           //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
-
-           //UserList users = userFile.readUserData();
-           //WishList wishes = wishFile.readWishData();
 
            ///Luke
            giftingTest(users, wishes, "Luke", "Han");
@@ -294,19 +273,11 @@ int main(){
            ///Yoda
            giftingTest(users, wishes, "Yoda", "Obi-Wan");
 
-           //userFile.writeUserData(users);
-           //wishFile.writeWishData(wishes);
-               userFile.writeUserData(users);
-
            }ENDM
 
        //Ajándékok törlése
        TEST(Torles, ajendekokTorlese){
-           //JSONParser userFile = JSONParser(String("userfajl eleresi ut"));
-           //JSONParser wishFile = JSONParser(String("wishfajl eleresi ut"));
 
-           //UserList users = userFile.readUserData();
-           //WishList wishes = wishFile.readWishData();
 
            ///Luke nem kér Vadertől
            delGiftTest(users, wishes, "Luke",0);
@@ -329,12 +300,11 @@ int main(){
            ///Vader nem kér egyet
            delGiftTest(users, wishes, "Vader", 0);
 
-           //userFile.writeUserData(users);
-           //wishFile.writeWishData(wishes);
+
+
        }ENDM
-   */
-
-
+    userFile.writeUserData(users);
+    wishFile.writeWishData(wishes);
     return  0;
 }
 #endif

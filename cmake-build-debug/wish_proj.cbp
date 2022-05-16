@@ -83,6 +83,9 @@
 		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/Array.hpp">
 			<Option target="wish_proj"/>
 		</Unit>
+		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/AuthMenu.cpp">
+			<Option target="wish_proj"/>
+		</Unit>
 		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/AuthMenu.hpp">
 			<Option target="wish_proj"/>
 		</Unit>
@@ -102,6 +105,9 @@
 			<Option target="wish_proj"/>
 		</Unit>
 		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/ListElement.hpp">
+			<Option target="wish_proj"/>
+		</Unit>
+		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/Menu.cpp">
 			<Option target="wish_proj"/>
 		</Unit>
 		<Unit filename="/Users/agotabenjoe/Egyetem/2.felev/wish-proj/Menu.hpp">

@@ -49,6 +49,7 @@ int List::getLen(){
             ListElement* tmp = elements->getNext();
             delete elements;
             elements = tmp;
+            len--;
         }else{
              ListElement* before;
              ListElement* iter = elements;
@@ -58,6 +59,7 @@ int List::getLen(){
              }
              before->setNext(iter->getNext());
              delete iter;
+             len--;
          }
     }
 

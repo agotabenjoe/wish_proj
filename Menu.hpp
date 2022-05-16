@@ -1,7 +1,10 @@
 #pragma once
+#define MEMTRACE
 
+#include <iostream>
 #include "WishList.hpp"
 #include "UserList.hpp"
+
 
 class Menu{
     bool& programRun;
@@ -24,8 +27,7 @@ class Menu{
     virtual void run();
 
     void createProfile();
+    User* signIn();
 
-    User signIn();
 
-    void exitProgram();
 };

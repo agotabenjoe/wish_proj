@@ -98,3 +98,5 @@ String operator+(char c, const String &rhs);
 /// Ide kerülnek a globális operátorok deklarációi.
 /// ...
 std::ostream& operator<<(std::ostream& os, String const& rhs);
+
+std::istream& operator>>(std::istream& is, String& s0);

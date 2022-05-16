@@ -10,27 +10,17 @@
 memtrace.h
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/memtrace.h
 
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/JSONParser.cpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/AuthMenu.cpp
 iostream
 -
-sstream
--
-fstream
--
-UserList.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/UserList.hpp
-WishList.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/WishList.hpp
-JSONParser.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/JSONParser.hpp
+AuthMenu.hpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/AuthMenu.hpp
 
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/JSONParser.hpp
-fstream
--
-UserList.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/UserList.hpp
-WishList.hpp
-/Users/agotabenjoe/Egyetem/2.felev/wish-proj/WishList.hpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/AuthMenu.hpp
+User.hpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/User.hpp
+Menu.hpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/Menu.hpp
 
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/List.hpp
 cstddef
@@ -39,6 +29,14 @@ ListElement.hpp
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/ListElement.hpp
 
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/ListElement.hpp
+
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/Menu.hpp
+iostream
+-
+WishList.hpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/WishList.hpp
+UserList.hpp
+/Users/agotabenjoe/Egyetem/2.felev/wish-proj/UserList.hpp
 
 /Users/agotabenjoe/Egyetem/2.felev/wish-proj/String.hpp
 iostream

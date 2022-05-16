@@ -422,5 +422,18 @@ void JSONParser::writeUserData(UserList &users) {
 }
 
 void JSONParser::writeWishData(WishList &wishes){
+    file = fopen(fileName.c_str(), "w");
+
+    fprintf(file, "[\n");
+
+    for (int i = 0; i < wishes.getLen()+1; ++i) {
+        if(dynamic_cast<Wish*>(wishes[i])->gotTaken()){
+            fprintf(file,"{\n\"name\":\"%s\",\n\"owner\":\"%s\",\n\"giver\":\"%s\"\n},\n",  dynamic_cast<Wish*>(wishes[i])->getName().c_str(),dynamic_cast<Wish*>(wishes[i])->getOwner().c_str(),dynamic_cast<Wish*>(wishes[i])->getGiver().c_str());
+        }else{
+            fprintf(file,"{\n\"name\":\"%s\",\n\"owner\":\"%s\",\n\"giver\":\"\"\n},\n",  dynamic_cast<Wish*>(wishes[i])->getName().c_str(),dynamic_cast<Wish*>(wishes[i])->getOwner().c_str());
+        }
+    }
+    fprintf(file, "]");
+    fclose(file);
 
 }

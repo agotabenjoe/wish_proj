@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/wish_proj.dir/AuthMenu.cpp.o"
   "CMakeFiles/wish_proj.dir/JSONParser.cpp.o"
   "CMakeFiles/wish_proj.dir/List.cpp.o"
   "CMakeFiles/wish_proj.dir/ListElement.cpp.o"
+  "CMakeFiles/wish_proj.dir/Menu.cpp.o"
   "CMakeFiles/wish_proj.dir/String.cpp.o"
   "CMakeFiles/wish_proj.dir/User.cpp.o"
   "CMakeFiles/wish_proj.dir/UserList.cpp.o"

@@ -13,8 +13,11 @@
      * ***/
     User* UserList::getUserbyUsername(String Username){
         User* iter = dynamic_cast<User*>(elements); //castolás, hogy működjön az őssel
-        while (iter->getUsername() != Username){
+        while (iter!=nullptr){
+            if(iter->getUsername() == Username){
+                return iter;
+            }
             iter = dynamic_cast<User*>(iter->getNext());
         }
-        return iter;
+        return  iter;
     }

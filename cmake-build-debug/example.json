@@ -4,16 +4,16 @@
  "password": "jelszo1234",
 "friends":["Han", "Leia", "Obi-Wan", "Yoda", "Vader"]
 "friendrequests":[]
-"wish":[1, 2, 3, 4]
-"gift":[]
+"wish":[3, 4]
+"gift":[13, 17]
 },
 {
 "username": "Obi-Wan",
  "password": "hellothere",
 "friends":["Luke", "Leia", "Yoda"]
 "friendrequests":["Luke"]
-"wish":[6, 7, 8, 9]
-"gift":[]
+"wish":[7, 8, 9]
+"gift":[11]
 },
 {
 "username": "Yoda",
@@ -36,15 +36,15 @@
  "password": "alderaan",
 "friends":["Luke", "Han", "Obi-Wan"]
 "friendrequests":["Luke", "Han", "Obi-Wan"]
-"wish":[17, 18]
-"gift":[]
+"wish":[17]
+"gift":[14, 15]
 },
 {
 "username": "Vader",
  "password": "ahmmhmh",
 "friends":["Luke"]
 "friendrequests":["Luke"]
-"wish":[20, 21, 22]
-"gift":[]
+"wish":[]
+"gift":[3]
 },
 ]
