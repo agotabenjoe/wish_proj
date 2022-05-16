@@ -15,7 +15,7 @@ void AuthMenu::run(){
         std::cout << "4.Kijelentkezés" << std::endl;
 
         std:: cin >> command;
-        if(command >-1 && command < 4){
+        if(command >-1 && command < 5){
             switch (command) {
                 case 0:
                     wishesMenu();
@@ -27,7 +27,7 @@ void AuthMenu::run(){
                     friendRequests();
                     break;
                 case 3:
-                    addFriend();
+                    requestFriendship();
                     break;
                 case 4:
                     menuRun = false;
@@ -41,7 +41,7 @@ void AuthMenu::run(){
 void AuthMenu::wishesMenu() {
     bool subMenu = true;
     while (subMenu){
-        std::cout << "Kívánságaim" << std::endl;
+        std::cout << "Kívánság menü" << std::endl;
         std::cout << "0.Új hozzáadás" << std::endl;
         std::cout << "1.Listázás" << std::endl;
         std::cout << "2.Szerkesztés" << std::endl;
@@ -49,7 +49,7 @@ void AuthMenu::wishesMenu() {
         std::cout << "4.Vissza" << std::endl;
 
         std:: cin >> command;
-        if(command >-1 && command < 4){
+        if(command >-1 && command  < 5){
             switch (command) {
                 case 0:
                     wishesAdd();
@@ -74,77 +74,77 @@ void AuthMenu::wishesMenu() {
 void AuthMenu::friends() {
     bool subMenu = true;
     while (subMenu){
-    std::cout << "Barátaim" << std::endl;
-    int i = 0;
-    for (; i < currentUser->getFriends().getLen(); ++i) {
-        std::cout << i << "." << currentUser->getFriends()[i] << std::endl;
-    }
-    std::cout << ++i << ".Vissza" << std::endl;
+        currentUser->listFriends();
 
-    std:: cin >> command;
-
-        if(command == i){
+        int command2;
+        std:: cin >> command2;
+        int printed = 0;
+        if(command2 == currentUser->getFriends().getLen()){
             subMenu = false;
-        } else {
-            bool subSubMenu = true;
-            while (subSubMenu){
-                int j = 0;
-
-            for (; j < wishes.getWishbyOwner(currentUser->getFriends()[command]).getLen(); ++j) {
-                if(!wishes.getWishbyOwner(currentUser->getFriends()[command])[j]->gotTaken())
-                    std::cout << j << "." << wishes.getWishbyOwner(currentUser->getFriends()[command])[j] << std::endl;
+        } else{
+            ///i. barát kávánságainak kilistázása
+            for (int j = 0; j < wishes.getWishbyOwner(currentUser->getFriends()[command2]).getLen(); ++j) {
+                if(!(wishes.getWishbyOwner(currentUser->getFriends()[command2])[j]->gotTaken())){
+                    std::cout<< j <<"."<<wishes.getWishbyOwner(currentUser->getFriends()[command2])[j]->getName()<<std::endl;
+                    printed++; ///emiatt nincs külön függvényben
+                }
             }
-            std::cout << ++j << ".Vissza" << std::endl;
-            int command2;
-            std::cin >> command2;
-            if (command2 == i) {
-                subSubMenu = false;
-            } else {
-                wishes.getWishbyOwner(currentUser->getFriends()[command])[command2]->setGiver(currentUser->getUsername());
-                currentUser->addGift(wishes.getWishbyOwner(currentUser->getFriends()[command])[command2]->getId());
-                std::cout << "Sikeres művelet" << std::endl;
-
+            if(printed > 0){
+                int command3;
+                std:: cin >> command3;
+                ///j. kívánság a currentu giftjeihez adása és a kívánságnál beállít owner
+                currentUser->addGift(users.getUserbyUsername(currentUser->getFriends()[command2])->getWishes()[command3]);
+                wishes.getWishbyId(users.getUserbyUsername(currentUser->getFriends()[command2])->getWishes()[command3])->setGiver(currentUser->getUsername());
+                std::cout << "Sikeres művelet:" << std::endl;
             }
         }
-
-        }
-
-
     }
 }
 
-void AuthMenu::friendRequests() {}
+void AuthMenu::friendRequests() {
+    bool subMenu = true;
+    while (subMenu) {
+        currentUser->listFriendsRequests();
 
-void AuthMenu::addFriend(){
+        int command2;
+        std:: cin >> command2;
+        int printed = 0;
+        if(command2 == currentUser->getFriendRequests().getLen()){
+            subMenu = false;
+        } else{
+            if(currentUser->getFriendRequests().getLen() > 0){
+                users.getUserbyUsername(currentUser->getFriendRequests()[command2])->addFriend(currentUser->getUsername());
+                currentUser->delFriendRequest(currentUser->getFriendRequests()[command2]);
+                currentUser->addFriend(currentUser->getFriendRequests()[command2]);
+                std::cout << "Sikeres művelet:" << std::endl;
+            }
+        }
+    }
+}
 
+void AuthMenu::requestFriendship(){
+    String newRequest;
+    std::cin >> newRequest;
+    if(users.getUserbyUsername(newRequest) == nullptr || currentUser->getFriends().isIn(newRequest)){
+        std::cout << "A művelet sikertelen" << std::endl;
+    } else{
+        users.getUserbyUsername(newRequest)->addFriendRequest(currentUser->getUsername());
+        std::cout << "A művelet sikeres" << std::endl;
+    }
 }
 
 void AuthMenu::wishesAdd(){
-    String newName;
-    std::cout << "Adjon meg egy új kívánságot:" << std::endl;
-    Wish* newW;
-    newW = new Wish(newName,currentUser->getUsername());
-    wishes.add(newW);
-    std::cout << "Sikeres művelet:" << std::endl;
+    wishes.addFromConsole(currentUser);
 }
 void AuthMenu::wishesUpdate(){
-    std:: cin >> command;
-    String newName;
-    std::cout << "Adjon meg egy új nevet:" << std::endl;
-    std:: cin >> newName;
-    wishes.getWishbyId(currentUser->getWishes()[command])->setName(newName);
-    std::cout << "Sikeres művelet:" << std::endl;
+    wishes.setNameFromConsole(currentUser);
 }
 
 void AuthMenu::wishesList() {
         std::cout << "Kívánságaim:" << std::endl;
-        //wishes.printWishMenu(currentUser);
-
-        std::cout <<  currentUser->getUsername();
+        wishes.printWishMenu(currentUser);
 }
 
 void AuthMenu::wishesRemove(){
-    std:: cin >> command;
-    wishes.remove(currentUser->getWishes()[command]);
-    std::cout << "Sikeres művelet:" << std::endl;
+    wishes.deleteFromConsole(currentUser, &users);
 }

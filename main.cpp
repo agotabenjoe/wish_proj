@@ -35,16 +35,15 @@ int main(){
 
     Menu welcomeMenu(programRun,wishes, users);
 
-    currentUser;
-    //TODO::a listázást be kell fejezni a current userese error ki lett javítva
-
-
     while(programRun){
         welcomeMenu.run();
-        currentUser = welcomeMenu.signIn();
-        if(currentUser != nullptr){
-            AuthMenu mainMenu(wishes, users, programRun, currentUser);
-            mainMenu.run();
+        if(programRun){
+            currentUser = welcomeMenu.signIn();
+            if(currentUser != nullptr){
+                AuthMenu mainMenu(wishes, users, programRun, currentUser);
+                mainMenu.run();
+                currentUser = nullptr;
+            }
         }
     }
 

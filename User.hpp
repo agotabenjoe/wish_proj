@@ -124,6 +124,10 @@ class User: public ListElement{
 
     void delWishById(int toDel);
 
+    void listFriends();
+    void listFriendsRequests();;
+
+
     User& operator=(const User& u);
 
     bool operator==(const User& u);

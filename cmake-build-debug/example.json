@@ -4,8 +4,8 @@
  "password": "jelszo1234",
 "friends":["Han", "Leia", "Obi-Wan", "Yoda", "Vader"]
 "friendrequests":[]
-"wish":[3, 4]
-"gift":[13, 17]
+"wish":[3, 20]
+"gift":[13, 17, 7, 8]
 },
 {
 "username": "Obi-Wan",
@@ -58,7 +58,7 @@
 {
 "username": "123",
  "password": "123",
-"friends":[]
+"friends":["Luke"]
 "friendrequests":[]
 "wish":[]
 "gift":[]
@@ -67,7 +67,7 @@
 "username": "asd",
  "password": "fsd",
 "friends":[]
-"friendrequests":[]
+"friendrequests":["Luke"]
 "wish":[]
 "gift":[]
 },

@@ -24,7 +24,7 @@ class AuthMenu: public Menu{
 
     void friendRequests();
 
-    void addFriend();
+    void requestFriendship();
 
     void wishesAdd();
 

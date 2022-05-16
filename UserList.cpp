@@ -62,3 +62,9 @@ User* UserList::signInFromConsole(){
     }
     return  currentUser;
 }
+
+void buyGiftFromConsole();
+
+void addFriendRequestFromConsole();
+
+void acceptFriendRequestFromConsole();

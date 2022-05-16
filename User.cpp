@@ -163,3 +163,20 @@ void User::delGiftById(int id){
             return true;
         return false;
     }
+
+void User::listFriends(){
+    int i = 0;
+    for (; i < getFriends().getLen(); ++i) {
+        std::cout<< i <<"."<<getFriends()[i]<<std::endl;
+    }
+    std::cout << i <<".Vissza" << std::endl;
+}
+
+void User::listFriendsRequests(){
+    int i = 0;
+    for (; i < getFriendRequests().getLen(); ++i) {
+        std::cout<< i <<"."<<getFriendRequests()[i]<<std::endl;
+    }
+    std::cout << i <<".Vissza" << std::endl;
+}
+

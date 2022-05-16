@@ -30,4 +30,11 @@ class UserList: public List{
     void userFromConsole();
 
     User* signInFromConsole();
+
+    void buyGiftFromConsole();
+
+    void addFriendRequestFromConsole();
+
+    void acceptFriendRequestFromConsole();
+
 };

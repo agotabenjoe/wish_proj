@@ -6,6 +6,8 @@
 #include "Wish.hpp"
 #include "Array.hpp"
 #include "User.hpp"
+#include "UserList.hpp"
+
 class WishList: public List{
     public:
     /*** 
@@ -37,5 +39,12 @@ class WishList: public List{
 
     ///Ki listázza egy user wisheit mint menüelemeket
     void printWishMenu(User* u);
+
+    void setNameFromConsole(User* u);
+
+    void deleteFromConsole(User* u, UserList* users);
+
+    void addFromConsole(User* u);
+
 
 };

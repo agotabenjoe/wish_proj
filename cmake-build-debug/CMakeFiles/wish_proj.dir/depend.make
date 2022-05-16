@@ -76,6 +76,7 @@ CMakeFiles/wish_proj.dir/WishList.cpp.o: \
  ../ListElement.hpp \
  ../String.hpp \
  ../User.hpp \
+ ../UserList.hpp \
  ../Wish.hpp \
  ../WishList.cpp \
  ../WishList.hpp \
